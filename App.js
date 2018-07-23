@@ -4,9 +4,19 @@ import { createStackNavigator } from 'react-navigation';
 import {  } from 'native-base';
 
 class HomeScreen extends React.Component{
-  static navigationOptions = {
+  static navigationOptions = ({navigation})=>{
+  return  {
     title: 'Home',
-  };
+    headerTitleStyle: {
+      marginLeft: 50,
+    },
+    headerRight:(<Button title="+1" onPress={navigation.getParam('clickFunction')} color="black"/>)
+    
+    };  
+  }
+  componentDidMount(){
+    this.props.navigation.setParams({clickFunction:()=>{alert("clicked")}});
+  }
   render(){
     return(
       <View style={styles.container}>
@@ -22,9 +32,7 @@ class AboutScreen extends React.Component{
   static navigationOptions = ({navigation})=>{
    return  {
     title: 'About '+navigation.getParam("count",1),
-    headerTitleStyle: {
-      marginLeft: 50,
-    },
+     
   }
 }; 
 
@@ -58,7 +66,18 @@ const Route=createStackNavigator({
   Home: HomeScreen,
   About: AboutScreen
 },{
-  initialRouteName:'Home'
+  initialRouteName:'Home',
+  navigationOptions : {
+    headerTitleStyle: {
+      marginLeft: 50,
+    },
+    headerStyle: { 
+      backgroundColor: '#000', 
+      // textColor:"white"
+    }, 
+    // 60b0ff
+    headerTintColor: '#fff', 
+  }
 });
 export default  class App extends React.Component {
   render() {
